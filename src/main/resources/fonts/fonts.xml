@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fontFamilies>
+
+	<fontFamily name="Angsana CRS">
+		<normal>fonts/ANGSA.TTF</normal>
+		<italic>fonts/ANGSA.TTF</italic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">Angsana CRS, 'Angsana new', AngsanaUPC</export>
+			<export key="net.sf.jasperreports.xhtml">Angsana CRS, 'Angsana new', AngsanaUPC</export>
+		</exportFonts>
+	</fontFamily>
+	
+	<fontFamily name="2006_iannnnnBKK CRS">
+		<normal>fonts/2006_IANNNNNBKK.TTF</normal>
+		<italic>fonts/2006_IANNNNNBKK.TTF</italic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">2006_iannnnnBKK CRS, '2006_iannnnnBKK new', 2006_iannnnnBKK</export>
+			<export key="net.sf.jasperreports.xhtml">2006_iannnnnBKK CRS, '2006_iannnnnBKK new', 2006_iannnnnBKK</export>
+		</exportFonts>
+	</fontFamily>
+	
+	<fontFamily name="2006_iannnnnBKK CRS">
+		<normal>fonts/2006_IANNNNNISO.TTF</normal>
+		<italic>fonts/2006_IANNNNNISO.TTF</italic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">2006_iannnnnISO CRS, '2006_iannnnnISO new', 2006_iannnnnISO</export>
+			<export key="net.sf.jasperreports.xhtml">2006_iannnnnISO CRS, '2006_iannnnnISO new', 2006_iannnnnISO</export>
+		</exportFonts>
+	</fontFamily>
+   
+</fontFamilies>

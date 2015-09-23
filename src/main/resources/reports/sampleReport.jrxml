@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sampleReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2035e6b3-3b21-4f02-a7de-7848efb4670a">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 1" fontSize="16" isBold="true"/>
+	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
+	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
+	<parameter name="pName" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+p.product_id as productId,
+p.product_name as productName,
+p.price as price,
+c.category_id as 'category.categoryId',
+c.category_name as 'category.categoryName'
+from product p
+inner join category c on c.category_id = p.category_id]]>
+	</queryString>
+	<field name="productId" class="java.lang.Integer"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="category.categoryId" class="java.lang.Integer"/>
+	<field name="category.categoryName" class="java.lang.String"/>
+	<group name="categoryGroup">
+		<groupExpression><![CDATA[$F{category.categoryId}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<rectangle>
+					<reportElement uuid="5c96830b-880f-4679-bdd3-68fa247efba3" x="-1" y="6" width="555" height="15" backcolor="#CCCCFF"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<line>
+					<reportElement uuid="aa3afae7-4028-44b7-accf-8643a8df4e99" x="-1" y="21" width="555" height="1" forecolor="#CCCCCC"/>
+				</line>
+				<textField>
+					<reportElement uuid="b7b1c370-4581-46bb-b2ef-7267c630a559" x="27" y="0" width="156" height="23" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="2006_iannnnnBKK" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{category.categoryName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="3a482d73-1e9a-4e46-a9e0-aeca109661a0" x="442" y="0" width="100" height="23" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="2006_iannnnnBKK" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($R{product.price} !=null)?$R{product.price}:"Price"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="85" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d116d4be-d85d-4a7b-901b-59abed9a145e" style="Heading 4" x="102" y="51" width="344" height="22" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="2006_iannnnnBKK" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($R{product.subtitle}!= null )?"("+$R{product.subtitle}+")":"(Product report group by Category)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b048d8d2-21b5-4165-8b99-9692771a4b3f" style="Heading 2" x="158" y="20" width="231" height="31" forecolor="#666666"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="2006_iannnnnBKK" size="24" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($R{product.title} != null)?$R{product.title}:"Product Report"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c0e64da7-4250-4a85-80d1-df0d5ac1b5e3" x="27" y="3" width="100" height="20" forecolor="#666666"/>
+				<textElement>
+					<font fontName="2006_iannnnnBKK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement uuid="fdf21482-6183-463c-83a8-b97384203f4a" x="486" y="3" width="56" height="20" forecolor="#009900"/>
+				<textElement textAlignment="Right">
+					<font fontName="2006_iannnnnBKK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="22d1382f-5586-4c16-a52c-1255f38d5d06" x="0" y="22" width="555" height="1" forecolor="#CCCCCC"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

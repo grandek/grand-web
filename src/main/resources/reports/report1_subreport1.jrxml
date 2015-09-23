@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="612b77b3-10ca-45c0-a652-057145443f9f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CATEGORY_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     product.`PRODUCT_ID` AS product_PRODUCT_ID,
+     product.`PRICE` AS product_PRICE,
+     product.`PRODUCT_NAME` AS product_PRODUCT_NAME,
+     orders.`ORDER_ID` AS orders_ORDER_ID,
+     orders.`ORDER_DATE` AS orders_ORDER_DATE,
+     orders.`CUSTOMER_ID` AS orders_CUSTOMER_ID,
+     orders.`EMPLOYEE_ID` AS orders_EMPLOYEE_ID,
+     orderdetails.`ORDER_DETAIL_ID` AS orderdetails_ORDER_DETAIL_ID,
+     orderdetails.`QUANTITY` AS orderdetails_QUANTITY,
+     orderdetails.`ORDER_ID` AS orderdetails_ORDER_ID,
+     orderdetails.`PRODUCT_ID` AS orderdetails_PRODUCT_ID,
+     product.`CATEGORY_ID` AS product_CATEGORY_ID
+FROM
+     `product` product INNER JOIN `orderdetails` orderdetails ON product.`PRODUCT_ID` = orderdetails.`PRODUCT_ID`
+     INNER JOIN `orders` orders ON orderdetails.`ORDER_ID` = orders.`ORDER_ID`]]>
+	</queryString>
+	<field name="product_PRODUCT_ID" class="java.lang.Integer"/>
+	<field name="product_PRICE" class="java.lang.Double"/>
+	<field name="product_PRODUCT_NAME" class="java.lang.String"/>
+	<field name="orders_ORDER_ID" class="java.lang.Integer"/>
+	<field name="orders_ORDER_DATE" class="java.sql.Timestamp"/>
+	<field name="orders_CUSTOMER_ID" class="java.lang.Integer"/>
+	<field name="orders_EMPLOYEE_ID" class="java.lang.Integer"/>
+	<field name="orderdetails_ORDER_DETAIL_ID" class="java.lang.Integer"/>
+	<field name="orderdetails_QUANTITY" class="java.lang.Integer"/>
+	<field name="orderdetails_ORDER_ID" class="java.lang.Integer"/>
+	<field name="orderdetails_PRODUCT_ID" class="java.lang.Integer"/>
+	<field name="product_CATEGORY_ID" class="java.lang.Integer"/>
+	<variable name="amount" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{product_PRICE}*$F{orderdetails_QUANTITY}]]></variableExpression>
+	</variable>
+	<group name="order">
+		<groupExpression><![CDATA[$F{orders_ORDER_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement uuid="cd4b9073-41a8-4705-ab45-88252a86bb53" x="23" y="19" width="100" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{orders_ORDER_ID}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement uuid="14216a05-4995-4994-8ddc-961141984b0c" x="141" y="19" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{orders_ORDER_DATE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="ad7dd15b-b2e8-4b9b-9033-855f742c01a4" x="0" y="0" width="551" height="20" backcolor="#00FFFF"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="bc0c7d9b-4ab8-4a58-8e08-2ca4c5e2bdab" x="0" y="0" width="141" height="20"/>
+				<textElement/>
+				<text><![CDATA[PRODUCT_NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ba2c7f2e-bdfd-45d4-97a2-dd6c12bac4b1" x="141" y="0" width="185" height="20"/>
+				<textElement/>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cfeb426b-8352-4f76-9a8b-07b65c2463b6" x="370" y="0" width="185" height="20" forecolor="#FFFFFF"/>
+				<textElement/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4b0fb697-428e-4c1e-8b67-1a6fef0c13fd" x="255" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[orderdetails_QUANTITY]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d45e4de3-248c-458f-b9ea-9ba16bc8a479" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_PRODUCT_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0fc5850e-6ed1-4792-aa4e-ca39a37961df" x="155" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_PRICE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="87aa574d-7d27-41be-ad72-f45930d49a91" x="435" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f44b0752-83ba-4f8a-8a64-adf370b146ec" x="326" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{orderdetails_QUANTITY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

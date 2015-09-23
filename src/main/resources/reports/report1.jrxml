@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54aae908-03d2-4fe2-b83d-7d2e5a682338">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\eclipse\\grand\\myweb\\src\\main\\resources\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from category]]>
+	</queryString>
+	<field name="CATEGORY_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATEGORY_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3d731b97-f35d-40a5-b180-8b03f191de9f" x="157" y="21" width="241" height="40"/>
+				<textElement>
+					<font fontName="2006_iannnnnBKK" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($R{category.report.title}!=null)?$R{category.report.title}:"Category Report"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement uuid="2f9faa7e-0cdc-4646-9988-6832ae28db25" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="2006_iannnnnBKK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($R{category.id}!=null)?$R{category.id}:"Category ID"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b35feaf7-9f49-4738-a782-60e52c79f218" x="277" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="2006_iannnnnBKK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($R{category.name}!=null)?$R{category.name}:"Category Name"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c1bf81d4-9d01-4b84-af09-ac435b5538cd" x="1" y="28" width="553" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="248" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1a6599da-25be-436b-9b1d-dbf305ed8161" x="0" y="0" width="277" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CATEGORY_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d9bc1b03-acd7-4e2c-becf-0f26ee8e2aaa" x="277" y="0" width="277" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CATEGORY_NAME}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="5069e93b-393b-436d-92be-82deaf0b5a9a" x="126" y="76" width="200" height="100"/>
+				<subreportParameter name="CATEGORY_ID">
+					<subreportParameterExpression><![CDATA[$F{CATEGORY_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report1_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

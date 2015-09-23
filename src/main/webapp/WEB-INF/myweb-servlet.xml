@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+ 
+ 	<!-- Use @Controller annotations for MVC controller definitions -->
+ 	<context:annotation-config/>
+	<mvc:annotation-driven/>
+	<mvc:resources mapping="/static/**" location="/" />
+	<mvc:resources mapping="/images/**" location="file:///C:/UPLOAD/" />
+<!-- 	<mvc:view-controller path="maintenance" view-name="maintenance/maintenance"/> -->
+ 	
+ 	<!-- Use @Component annotations for bean definitions -->
+	<context:component-scan base-package="com.grandek.myweb.*" />
+	<context:component-scan base-package="com.grandek.mydb.*" />
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix"><value>/WEB-INF/views/</value></property>
+		<property name="suffix"><value>.jsp</value></property>
+	</bean>
+	
+	<!-- Message Resource config -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"></property>
+        <property name="defaultEncoding" value="UTF-8"></property>
+    </bean>
+
+ 	<!-- I18n config -->
+    <mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="locale" />
+		</bean>
+		<bean class="com.grandek.myweb.interceptor.MaintenanceInterceptor">
+			<property name="maintenanceStartTime" value="23" />
+			<property name="maintenanceEndTime" value="24" />
+			<property name="maintenanceMapping" value="/myweb/maintenance.jsp" />
+		</bean>
+		<bean class="com.grandek.myweb.interceptor.ExecuteTimeInterceptor">
+		</bean>
+	</mvc:interceptors>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+	
+	<!-- Database connection -->
+	 <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"/>
+     </bean>
+        
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.mysql.driverClassName}"></property>
+        <property name="url" value="${jdbc.mysql.databaseurl}"></property>
+        <property name="username" value="${jdbc.mysql.username}"></property>
+        <property name="password" value="${jdbc.mysql.password}"></property>
+    </bean>
+    
+    <bean id="sessionFactory"  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" p:packagesToScan="com.grandek.mydb.model">
+       <property name="dataSource" ref="dataSource"></property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${jdbc.mysql.dialect}</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+<!--                 <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+            </props>
+        </property>
+        <property name="entityInterceptor">
+        	<bean class="com.grandek.myweb.interceptor.AuditInterceptor"/>
+        </property>
+    </bean>
+ 
+ 	<!-- Use @Transaction annotations for managing transactions -->
+ 	<tx:annotation-driven />
+ 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5000000" />   
+    </bean>
+
+<!-- 	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean> -->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> -->
+<!-- 		<property name="messageConverters"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="jacksonMessageConverter" /> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.io.IOException">
+					errors/ioerror
+				</prop>
+				<prop key="java.lang.Throwable">
+					errors/simpleerror
+				</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="errors/defaulterror" />
+	</bean>
+</beans>
